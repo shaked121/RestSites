@@ -1,0 +1,1 @@
+A program that accepts as input all the gene regions encoded in the yeast. The program will search the gene sequences for the matching pattern of the three restriction enzymes and save them in an output file.
