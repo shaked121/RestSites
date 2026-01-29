@@ -59238,4 +59238,10 @@ CCTGGG
 There are 0 CjuI sites:
 
 >R0040C REP2 SGDID:S000029676, 2-micron plasmid from 6198-5308, Genome Release 64-1-1, reverse complement, Verified ORF, "Master regulator that acts in concert with Rep1p to regulate transcript levels of the FLP1 gene that promotes plasmid copy amplification; also autoregulates levels of its own transcript"
-Number of Protein with any kind of site: 5725
+There are 1 DsaI sites:
+CCATGG
+There are 1 SecI sites:
+CCATGG
+There are 0 CjuI sites:
+
+Number of Protein with any kind of site: 5726
