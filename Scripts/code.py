@@ -1,24 +1,46 @@
 import re
-file1 = open("Data/orf_coding_all.fa.txt","r")
-file2 = open("Result/output.txt","w")
-gene=""
+
+file1 = open("Data/orf_coding_all.fa.txt", "r")
+file2 = open("Result/output.txt", "w")
+
+gene = ""
+header = ""
+count = 0
+
 for line in file1:
+    line = line.strip()
+
     if line.startswith(">"):
-        if gene!="":
-            file2.write(line + "\n")
-        else:
-            Dsal = re.findall(R'CC[AG][CT]GG', gene)
-            file2.write("There are"+ str(len(Dsal)) + "DsaI sites :\n")
-            for x in range(len(Dsal)):
-                file2.write(str(Dsal[x]) + "\n")
-            SecI = re.findall(R'CC[ACGT]{2}GG', gene)
-            file2.write("There are"+ str(len(SecI)) + "SecI sites :\n")
-            for x in range(len(SecI)):
-                file2.write(str(SecI[x]) + "\n")
-            CjuI = re.findall(R'CA[CT][ACGT]{5}[AG]TG', gene)
-            file2.write("There are"+ str(len(CjuI)) + "CjuI sites :\n")
-            for x in range(len(CjuI)):
-                file2.write(str(CjuI[x]) + "\n")
-            file2.write(line + "\n")
-    line = line.rstrip("\n")
-    gene += line
+        # analyze previous gene
+        if gene != "":
+            DsaI = re.findall(r"CC[AG][CT]GG", gene)
+            SecI = re.findall(r"CC[ACGT]{2}GG", gene)
+            CjuI = re.findall(r"CA[CT][ACGT]{5}[AG]TG", gene)
+            if(len(DsaI) == 0 and len(SecI) == 0 and len(CjuI) == 0):
+                file2.write("No restriction sites found.\n")
+            else:
+                count += 1
+                file2.write("There are " + str(len(DsaI)) + " DsaI sites:\n")
+                for x in DsaI:
+                    file2.write(x + "\n")
+
+                file2.write("There are " + str(len(SecI)) + " SecI sites:\n")
+                for x in SecI:
+                    file2.write(x + "\n")
+
+                file2.write("There are " + str(len(CjuI)) + " CjuI sites:\n")
+                for x in CjuI:
+                    file2.write(x + "\n")
+
+
+            file2.write("\n")
+
+        header = line
+        file2.write(header + "\n")
+        gene = ""   # IMPORTANT reset
+
+    else:
+        gene += line
+file2.write("Number of Protein with any kind of site: " + str(count) + "\n")
+file1.close()
+file2.close()
